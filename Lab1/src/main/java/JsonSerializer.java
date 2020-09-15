@@ -18,7 +18,7 @@ public class JsonSerializer implements Serializable {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
         objectOutputStream.writeObject(jsonObject.toString());
         objectOutputStream.flush();
-        return byteArrayOutputStream.toByteArray    ();
+        return byteArrayOutputStream.toByteArray();
 
     }
 
