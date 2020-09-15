@@ -1,4 +1,4 @@
-package publisher;
+package common;
 
 import org.json.JSONObject;
 

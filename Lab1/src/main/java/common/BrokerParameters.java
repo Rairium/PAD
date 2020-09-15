@@ -1,4 +1,4 @@
-package broker;
+package common;
 
 public class BrokerParameters {
     public static final int BROKER_PORT = 9000;
