@@ -1,3 +1,4 @@
+package publisher;
 
 import org.json.JSONObject;
 
@@ -5,7 +6,7 @@ import java.io.*;
 
 public class JsonSerializer implements Serializable {
 
-    public static JSONObject getJSONByData(Integer id, String topic, String message) {
+    public static JSONObject getJSONByData(String id, String topic, String message) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", id);
         jsonObject.put("topic", topic);
