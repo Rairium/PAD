@@ -26,7 +26,6 @@ public class JsonSerializer implements Serializable {
     public static JSONObject deserializeJSON(byte[] data) throws IOException, ClassNotFoundException {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);
         ObjectInput input = new ObjectInputStream(byteArrayInputStream);
-
         String deserializedData = (String) input.readObject();
         return new JSONObject(deserializedData);
     }
