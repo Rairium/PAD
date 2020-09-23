@@ -40,7 +40,7 @@ public class SubscriberSocket {
     }
 
     private void subscribe() throws IOException {
-        byte[] data = JsonSerializer.serializeJSON(JsonSerializer.getJSONByData("none", this.topic, "none"));
+        byte[] data = JsonSerializer.serializeJSON(JsonSerializer.getJSONByData("subscribe#"+this.topic, ""));
         send(data);
     }
 
@@ -54,6 +54,7 @@ public class SubscriberSocket {
                 JSONObject jsonData = JsonSerializer.deserializeJSON(connectionInfo.getData());
                 JsonParser parsedData = new JsonParser();
                 parsedData.parseJSON(jsonData);
+                System.out.println(parsedData.getMessage());
             }
         } catch (Exception e) {
             e.printStackTrace();

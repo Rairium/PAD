@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Publisher {
+public class Publisher3 {
     public static Scanner sc = new Scanner(System.in);
     static int messageCount = 0;
 

@@ -3,18 +3,12 @@ package common;
 import org.json.JSONObject;
 
 public class JsonParser {
-    String id;
     String topic;
     String message;
 
-    public void parseJSON(JSONObject jsonObject){
-        this.id = jsonObject.getString("id");
+    public void parseJSON(JSONObject jsonObject) {
         this.topic = jsonObject.getString("topic");
         this.message = jsonObject.getString("message");
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getTopic() {

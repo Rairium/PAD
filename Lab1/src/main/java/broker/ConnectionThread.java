@@ -9,7 +9,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class BrokerThread implements Runnable {
+public class ConnectionThread implements Runnable {
 
     BrokerSocket brokerSocket;
     Socket connectedClient;
@@ -19,8 +19,7 @@ public class BrokerThread implements Runnable {
     int id;
     ConnectionInfo connectionInfo = new ConnectionInfo();
 
-    BrokerThread(Socket connectedClient, int count, BrokerSocket brokerSocket) throws IOException {
-
+    ConnectionThread(Socket connectedClient, int count, BrokerSocket brokerSocket) throws IOException {
         this.brokerSocket = brokerSocket;
         this.connectedClient = connectedClient;
         this.id = count;
@@ -31,7 +30,6 @@ public class BrokerThread implements Runnable {
     }
 
     public void run() {
-        int x = 1;
         try {
             while (true) {
                 inputStream.read(connectionInfo.getData());
@@ -39,33 +37,25 @@ public class BrokerThread implements Runnable {
                 JsonParser parsedData = new JsonParser();
                 parsedData.parseJSON(jsonData);
                 connectionInfo.setTopic(parsedData.getTopic());
-                System.out.println(jsonData);
-//                System.out.print("Cl
-//                ient(" + id + ") :" + s + "\n");
-//                System.out.print("Server : ");
-//                //s=stdin.readLine();
-//                s = sc.nextLine();
-//                if (s.equalsIgnoreCase("bye")) {
-//                    cout.println("BYE");
-//                    x = 0;
-//                    System.out.println("Connection ended by server");
-//                    break;
-//                }
-//                cout.println(s);
-//            }
-//
-//
-//            cin.close();
-//            brokerSocket.getServerSocket().close();
-//            cout.close();
-//            if (x == 0) {
-//                System.out.println("Server cleaning up.");
-//                System.exit(0);
+                connectionInfo.setAddress(this.connectedClient.getRemoteSocketAddress().toString());
+                connectionInfo.setSocket(this.connectedClient);
+                if (connectionInfo.getTopic().contains("subscribe#")) {
+                    connectionInfo.setTopic(parsedData.getTopic().replace("subscribe#", ""));
+                    ConnectionStorage.add(connectionInfo);
+                } else {
+                    DataStorage.add(connectionInfo);
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("The Connection with " + this.connectedClient.getRemoteSocketAddress().toString() + "  was forcefully interrupted");
+            ConnectionStorage.remove(this.connectedClient.getRemoteSocketAddress().toString());
+            if (this.connectedClient.isConnected()) {
+                try {
+                    this.connectedClient.close();
+                } catch (IOException ioException) {
+                    System.out.println("Client Socket already closed");
+                }
+            }
         }
-
-
     }
 }

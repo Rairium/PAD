@@ -6,9 +6,8 @@ import java.io.*;
 
 public class JsonSerializer implements Serializable {
 
-    public static JSONObject getJSONByData(String id, String topic, String message) {
+    public static JSONObject getJSONByData(String topic, String message) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", id);
         jsonObject.put("topic", topic);
         jsonObject.put("message", message);
         return jsonObject;

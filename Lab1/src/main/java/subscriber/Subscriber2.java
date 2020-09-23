@@ -3,7 +3,7 @@ package subscriber;
 import common.BrokerParameters;
 import java.util.Scanner;
 
-public class Subscriber {
+public class Subscriber2 {
     public static void main(String[] args) throws Exception {
         System.out.println("Subscriber");
         String topic;
